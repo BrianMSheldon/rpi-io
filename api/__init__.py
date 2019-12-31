@@ -1,9 +1,10 @@
 """REST API for Raspberry Pi GPIO."""
 
+import json
 import logging
 
 from tornado.ioloop import IOLoop
-from tornado.web import Application
+from tornado.web import Application, RequestHandler
 
 from api import compat
 
@@ -11,8 +12,20 @@ from api import compat
 log = logging.getLogger()
 
 
+class IndexHandler(RequestHandler):
+    SUPPORTED_METHODS = ['GET']
+
+    def get(self):
+        index = {
+            '/index': 'The API index',
+        }
+        self.write(json.dumps(index))
+
+
 def make_app():
-    return Application()
+    return Application([
+        ('/index', IndexHandler),
+    ])
 
 
 def start(port: int = 8100):
