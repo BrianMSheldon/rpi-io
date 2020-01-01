@@ -22,8 +22,21 @@ class IndexHandler(RequestHandler):
         self.write(json.dumps(index))
 
 
+class RootHandler(RequestHandler):
+    SUPPORTED_METHODS = ['GET']
+
+    def get(self):
+        shutdown = self.get_argument('shutdown')
+        log.debug(f'Received shutdown argument: {shutdown!r}')
+        if shutdown.lower() == 'true':
+            self.write('Shutting down')
+            log.warning('System shutdown initiated from api')
+            raise SystemExit('Shutting down')
+
+
 def make_app():
     return Application([
+        ('/', RootHandler),
         ('/index', IndexHandler),
     ])
 
