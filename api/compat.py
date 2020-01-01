@@ -26,8 +26,8 @@ def windows_event_loop_policy():
 
     if all([
         sys.platform == 'win32',
-        sys.version_info > (3, 8),
-        tornado.version_info > (5,),
+        sys.version_info >= (3, 8),
+        tornado.version_info >= (5,),
     ]):
         policy = asyncio.WindowsSelectorEventLoopPolicy()
         log.debug('Configuring event loop policy')
