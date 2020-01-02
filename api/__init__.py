@@ -9,7 +9,7 @@ from tornado.web import Application, RequestHandler
 from api import compat
 
 # Configure logging
-log = logging.getLogger()
+log = logging.getLogger(__name__)
 
 
 class IndexHandler(RequestHandler):
